@@ -58,3 +58,44 @@ python pyProfile.py
 ### Cuda
 
 Integrate in `train_cudaProfile.py` code. Run CMDs as above to train, just replace `train.py` with `train_cudaProfile.py`.
+
+
+# Git version control
+When you make changes to files in the main repository (but not the submodules), you can simply use:
+```bash
+git push origin main
+```
+However, if you make changes to files within the submodule directories, you should use:
+```bash
+git push --recurse-submodules=on-demand origin main
+```
+This ensures that both your main repository changes and any submodule changes are pushed to their respective remote repositories.
+Here's a practical workflow for making changes:
+
+If you modify files only in the main repository:
+```bash
+git add .
+git commit -m "Update main repository files"
+git push origin main
+```
+
+If you modify files in both the main repository and submodules:
+```bash # First commit changes in submodules
+cd path/to/submodule
+git add .
+git commit -m "Update submodule files"
+```
+# Return to main repository
+```bash
+cd ../..
+git add .
+git commit -m "Update main repository and submodule references"
+git push --recurse-submodules=on-demand origin main
+```
+
+The --recurse-submodules=on-demand option is valuable because it will:
+
+Check if your submodule changes need to be pushed
+Push those changes to the submodule's remote repository
+Then push your main repository changes
+
